@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+class Compiler
+{
+    public static HashSet<string> computeNullables(string infile)
+    {
+        var g = new Grammar(infile, false);
+        var rv = new HashSet<string>();
+        foreach (var x in g.nullable)
+        {
+            rv.Add(x);
+        }
+        return rv;
+    }
+
+    public static Dictionary<string, HashSet<string>> computeFirsts(string grammarfile)
+    {
+        var g = new Grammar(grammarfile, false);
+        var first = new Dictionary<string, HashSet<string>>();
+        foreach (var x in g.first)
+        {
+            first.Add(x.Key, x.Value);
+        }
+
+        return first;
+    }
+    public static Dictionary<string, HashSet<string>> computeFollow(string grammarfile)
+    {
+        var g = new Grammar(grammarfile, false);
+        var follow = new Dictionary<string, HashSet<string>>();
+        foreach (var x in g.follow)
+        {
+            follow.Add(x.Key, x.Value);
+        }
+
+        return follow;
+    }
+}
